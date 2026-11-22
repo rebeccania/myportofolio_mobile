@@ -28,7 +28,7 @@ Proyek ini adalah aplikasi mobile MyPortfolio yang dibuat pakai Flutter untuk ma
 5. (Opsional) Cek kualitas kode
    flutter analyze
 
-# Progress Mingguan
+# Progress Mingguan Week 11
 a. Tutorial 08: Basic Flutter
 - Install Flutter SDK di Windows, ekstrak ke C:\src\flutter, lalu daftarin folder bin-nya ke PATH.
 - Install Android Studio dan Android SDK (SDK Command-line Tools, Build-Tools, Platform-Tools, Emulator). Karena storage C: penuh, lokasi Android SDK aku pindah ke D:\Android\Sdk dan Flutter diarahkan ke situ pakai flutter config --android-sdk.
@@ -152,7 +152,7 @@ Sumber :
 https://docs.flutter.dev/ui/widgets-intro
 https://docs.flutter.dev/ui/interactivity
 
-# Progress Mingguan
+# Progress Mingguan Week 12
 a. Tutorial 09: Flutter Navigation, Layouts, Forms, and Input Elements
 - Ganti semua impor package:flutter/material.dart jadi package:material_ui/material_ui.dart (pakai flutter pub add material_ui) karena Flutter yang kupakai versi 3.47.
 - Bikin LeftDrawer di lib/widgets/left_drawer.dart berisi DrawerHeader dan menu Home serta Add Project, lalu dipasang lewat properti drawer di Scaffold.
@@ -171,7 +171,7 @@ b.Individual Assignment 8
 - Menguji form dari kartu dan dari drawer, input valid dan tidak valid, navigasi balik lewat opsi Home, serta tampilan di lebar layar sempit.
 - Menjalankan flutter analyze sampai tidak ada isu, lalu commit dan push per file ke GitHub.
 
-### Tugas 7
+### Tugas 8
 
 1. # Jelaskan perbedaan antara Navigator.push(), Navigator.pushReplacement(), dan Navigator.pop(). Metode apa yang digunakan untuk membuka formulir dari kartu aksi? Jelaskan juga bagaimana opsi Home di drawer membawa pengguna kembali ke halaman utama.
 
