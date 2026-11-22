@@ -1,21 +1,3 @@
-# myportofolio_mobile
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
 MyPortfolio Mobile
 
 Nama : Rebeccaniaga Napitupulu NPM : 2506598394 Kelas : PBP E Dosen : Pak Daya
@@ -169,3 +151,60 @@ AI Disclosure : Dalam pengerjaan Individual Assignment 7, aku pakai AI  sebagai 
 Sumber : 
 https://docs.flutter.dev/ui/widgets-intro
 https://docs.flutter.dev/ui/interactivity
+
+# Progress Mingguan
+a. Tutorial 09: Flutter Navigation, Layouts, Forms, and Input Elements
+- Ganti semua impor package:flutter/material.dart jadi package:material_ui/material_ui.dart (pakai flutter pub add material_ui) karena Flutter yang kupakai versi 3.47.
+- Bikin LeftDrawer di lib/widgets/left_drawer.dart berisi DrawerHeader dan menu Home serta Add Project, lalu dipasang lewat properti drawer di Scaffold.
+- Bikin halaman form tambah proyek (ProjectFormPage) pakai StatefulWidget, Form, GlobalKey<FormState>, TextFormField, dan DropdownButtonFormField, lengkap dengan validator dan tombol Save yang memunculkan AlertDialog.
+- Nambahin navigasi Navigator.push() dari kartu Tambah Proyek ke form.
+- Refactoring struktur folder: ItemCard dipindah ke lib/widgets/project_card.dart, lalu menu.dart dan project_form.dart dipindah ke lib/screens/. Pindahnya lewat VS Code supaya impornya ikut terupdate.
+- Memastikan nggak ada komentar TODO yang tersisa dan flutter analyze bersih
+
+b.Individual Assignment 8
+- Bikin halaman form baru untuk bagian Experience di lib/screens/experience_form.dart (ExperienceFormPage), pakai StatefulWidget, Form, dan GlobalKey<FormState>.
+- Field formulir disesuaikan dengan model Experience: organisasi/institusi, posisi, jenis pengalaman (dropdown), tanggal mulai dan tanggal selesai (pakai showDatePicker), checkbox "Masih berlangsung", deskripsi, dan tautan opsional.
+- Validasi tiap input: isian wajib nggak boleh kosong atau cuma spasi, ada batas panjang (nama dan posisi maksimal 100 karakter, deskripsi maksimal 300 karakter), tautan harus berformat URL http/https, dan tanggal selesai nggak boleh lebih awal dari tanggal mulai.
+- Nambahin kartu aksi baru Tambah Pengalaman di halaman utama (warna oranye) yang membuka form lewat Navigator.push().
+- Nambahin opsi Add Experience di drawer, dengan opsi Home dan Add Project tetap dipertahankan. Drawer yang sama juga dipasang di halaman form baru.
+- Tombol Simpan memanggil validate(), dan dialog ringkasan baru muncul kalau semua input valid.
+- Menguji form dari kartu dan dari drawer, input valid dan tidak valid, navigasi balik lewat opsi Home, serta tampilan di lebar layar sempit.
+- Menjalankan flutter analyze sampai tidak ada isu, lalu commit dan push per file ke GitHub.
+
+### Tugas 7
+
+1. # Jelaskan perbedaan antara Navigator.push(), Navigator.pushReplacement(), dan Navigator.pop(). Metode apa yang digunakan untuk membuka formulir dari kartu aksi? Jelaskan juga bagaimana opsi Home di drawer membawa pengguna kembali ke halaman utama.
+
+Navigator itu untuk mengatur halaman (route) kayak tumpukan (stack). Bedanya:
+- push() nambahin halaman baru di atas tumpukan. Halaman lama tetap ada di bawahnya, jadi user bisa balik pakai tombol Back.
+- pushReplacement() ngeganti halaman yang lagi tampil dengan halaman baru. Halaman lama dibuang dari tumpukan, jadi nggak bisa balik ke halaman itu lewat Back.
+- pop() ngebuang halaman paling atas dan balik ke halaman di bawahnya. Contohnya dipakai buat nutup dialog setelah tombol OK ditekan.
+
+Buat buka form dari kartu aksi, aku pakai Navigator.push(), jadi setelah form kebuka user masih bisa balik ke menu pakai tombol Back bawaan perangkat atau browser.Opsi Home di drawer pakai Navigator.pushReplacement() ke MyHomePage(). Jadi halaman form yang lagi kebuka diganti sama halaman utama, dan user langsung sampai di halaman utama. Pakai pushReplacement di drawer karena navigasi lewat drawer itu sifatnya pindah menu, bukan nambah halaman yang harus bisa diBack satu per satu.
+
+2. # Bagaimana susunan Scaffold, AppBar, dan Drawer membantu menjaga struktur halaman tetap konsisten? Berikan satu contoh penggunaan warna tema portofolio di lebih dari satu halaman.
+
+Scaffold itu kerangka dasar tiap halaman: dia nyediain slot buat appBar, drawer, dan body. Karena semua halamanku (halaman utama, form proyek, form pengalaman) pakai susunan yang sama, posisi bar judul, ikon hamburger, dan isi halaman jadi seragam dan user nggak bingung. Drawer aku bikin satu kali sebagai widget LeftDrawer, lalu tinggal dipasang di semua halaman lewat drawer: const LeftDrawer(), jadi menu navigasinya selalu sama dan kalau mau nambah menu cukup ubah satu file.
+
+Contoh pemakaian warna tema: AppBar di MyHomePage dan di ExperienceFormPage sama-sama memakai Theme.of(context).colorScheme.primary (turunan warna seed indigo dari MaterialApp), dengan ikon hamburger putih lewat iconTheme. Warna indigo yang sama juga muncul di DrawerHeader dan tombol Simpan di form, jadi tampilan antarhalaman nyambung.
+
+3. # Mengapa tata letak tersebut dipilih untuk formulir? Jelaskan peran widget pengatur jarak dan widget penggulir ketika ruang layar terbatas.
+
+Form kususun pakai Column di dalam SingleChildScrollView, karena field form itu urutannya vertikal dan jumlahnya lumayan banyak. Tiap field dibungkus Padding supaya ada jarak antar field dan dari tepi layar, jadi nggak berdempetan dan lebih enak disentuh.
+
+SingleChildScrollView penting buat layar sempit atau pas keyboard muncul. Keyboard makan sebagian tinggi layar, dan kalau Column dibiarin tanpa scroll, isinya bisa melebihi ruang yang ada dan muncul error overflow (garis kuning-hitam), apalagi tombol Simpan yang ada paling bawah bisa ketutup dan nggak kejangkau. Dengan dibungkus widget penggulir, user tinggal scroll ke bawah buat nyampe ke tombol Simpan.
+
+4. # Apa peran GlobalKey<FormState>, validator, dan validate() saat tombol Simpan ditekan? Berikan satu contoh nilai yang ditolak oleh validasi dan jelaskan mengapa memilih jenis input atau papan ketik saja belum cukup.
+- GlobalKey<FormState> dipasang di widget Form supaya kode di luar form (misalnya tombol Simpan) bisa ngakses state formnya lewat _formKey.currentState.
+- validator adalah fungsi di tiap field yang ngecek isinya: balikin teks pesan error kalau nggak valid, atau null kalau valid.
+- validate() dipanggil pas tombol Simpan ditekan. Dia ngejalanin semua validator, nampilin pesan error di bawah field yang bermasalah, dan balikin true cuma kalau semua field valid. Dialog ringkasan baru ditampilin kalau hasilnya true.
+
+Contoh nilai yang ditolak: nama organisasi yang cuma diisi spasi ("   ") ditolak karena setelah trim() hasilnya kosong. Contoh lain, tautan abc ditolak karena bukan URL http/https, dan tanggal selesai yang lebih awal dari tanggal mulai juga ditolak.
+
+Milih jenis input atau tipe keyboard aja belum cukup, karena itu cuma mengatur tampilan keyboard atau cara ngisi, bukan ngecek isinya. User tetap bisa nempel teks sembarangan, ngetik pakai keyboard fisik di web, atau ngirim spasi doang. Tipe input juga nggak bisa ngecek aturan yang bergantung pada field lain, misalnya urutan tanggal mulai dan selesai, atau batas panjang karakter. Makanya tetap butuh validator untuk ngecek aturan data yang sebenarnya.
+
+AI Disclosure : Di Individual Assignment 8, aku pakai AI buat ngebantu memahami isi tugas, ngejelasin konsep navigasi, form, dan validasi, serta ngasih contoh kode seperti LeftDrawer, ProjectFormPage, dan ExperienceFormPage.Kode dari AI tetap aku cocokin dengan struktur proyekku, aku jalanin sendiri, dan aku uji manual di browser.Beberapa hal yang harus aku cek dan bereskan sendiri:Chrome debug kosong lagi. Setelah nambah kode, jendela Chrome dari flutter run -d chrome cuma nampilin about:blank dan terminal bilang No client connected. Aku pindah ke flutter run -d web-server lalu buka alamat localhostnya sendiri di browser, dan itu lebih stabil.Pengujian form. Aku nyoba input kosong, cuma spasi, URL yang salah, dan tanggal selesai yang lebih awal dari tanggal mulai, lalu mastiin dialog ringkasan cuma muncul kalau semua input valid. Aku juga ngecek form dari kartu dan dari drawer serta tombol Home buat balik ke halaman utama.
+
+Sumber :
+Flutter Docs, Navigation: https://docs.flutter.dev/ui/navigation
+Flutter Docs, Forms: https://docs.flutter.dev/cookbook/forms/validation
