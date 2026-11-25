@@ -90,10 +90,7 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
       appBar: AppBar(
         title: const Text(
           'Add Experience Form',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
         iconTheme: const IconThemeData(color: Colors.white),
@@ -174,10 +171,10 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                   ),
                   initialValue: _type,
                   items: _types
-                      .map((type) => DropdownMenuItem(
-                            value: type,
-                            child: Text(type),
-                          ))
+                      .map(
+                        (type) =>
+                            DropdownMenuItem(value: type, child: Text(type)),
+                      )
                       .toList(),
                   onChanged: (String? newValue) {
                     setState(() {
@@ -318,8 +315,7 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          WidgetStateProperty.all(Colors.indigo),
+                      backgroundColor: WidgetStateProperty.all(Colors.indigo),
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -327,8 +323,9 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-                              title:
-                                  const Text('Pengalaman berhasil ditambahkan!'),
+                              title: const Text(
+                                'Pengalaman berhasil ditambahkan!',
+                              ),
                               content: SingleChildScrollView(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,8 +333,7 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                                     Text('Organisasi: $_organization'),
                                     Text('Posisi: $_position'),
                                     Text('Jenis: $_type'),
-                                    Text(
-                                        'Mulai: ${_formatDate(_startDate!)}'),
+                                    Text('Mulai: ${_formatDate(_startDate!)}'),
                                     Text(
                                       'Selesai: ${_isOngoing ? "Masih berlangsung" : _formatDate(_endDate!)}',
                                     ),
